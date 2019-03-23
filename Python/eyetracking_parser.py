@@ -32,7 +32,7 @@ def determine_aoi(x, y):
     return 1
 
 def write_file(output):
-    with open('testing_things.txt', 'w') as f:
+    with open('testing_things.csv', 'w') as f:
 
         f.write("TS,DUR,X,Y,AOI\n")
         for item in output:
