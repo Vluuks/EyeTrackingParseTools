@@ -9,6 +9,12 @@ def parse_file(filename):
         reader = csv.DictReader(f, dialect='excel-tab')
     
         # iterate over rows
+
+        # temporary metric so long as we have no aoi or line data
+        # this is inaccurate for now because it assumes every measurement represents a new line
+        # which is of course not true
+        linenumber = 10
+
         for row in reader:
             # print(row)
             
@@ -19,8 +25,9 @@ def parse_file(filename):
                 y_coor = row['FixationPointY (MCSpx)']
 
                 aoi = determine_aoi(x_coor, y_coor)
+                linenumber += 1
 
-                parsed_data.append([row['RecordingTimestamp'], row['GazeEventDuration'], x_coor, y_coor, str(aoi)])
+                parsed_data.append([row['RecordingTimestamp'], row['GazeEventDuration'], x_coor, y_coor, str(aoi), str(linenumber // 10) ])
 
     
     # write new data to file
@@ -34,7 +41,7 @@ def determine_aoi(x, y):
 def write_file(output):
     with open('testing_things.csv', 'w') as f:
 
-        f.write("TS,DUR,X,Y,AOI\n")
+        f.write("TS,DUR,X,Y,AOI,LN\n")
         for item in output:
             print(item)
             f.write("%s\n" % (",").join(item))
