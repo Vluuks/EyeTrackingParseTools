@@ -29,6 +29,9 @@ function makeChart() {
         .rangeRound([0, width])
         .padding(0.1);
 
+    var x2 = d3.scaleLinear()
+        .range([0, width])
+
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
 
@@ -36,6 +39,10 @@ function makeChart() {
         x.domain(data.map(function (d) {
                 return d.TS;
             }));
+
+        x2.domain([0, d3.max(data, function(d) { 
+            return d.TS 
+        })]);
             
         // y axis ranging from first to max line number (might have to be reversed?)
         y.domain([d3.max(data, function (d) {
@@ -45,7 +52,7 @@ function makeChart() {
         g.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
+        .call(d3.axisBottom(x2).ticks(20));
 
         // rotate x axis text
         g.selectAll(".x text")
