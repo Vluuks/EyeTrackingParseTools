@@ -86,7 +86,11 @@ function makeChart() {
         .attr("y", function (d) {
             return y(Number(d.LN)) - barHeight;
         })
-        .attr("width", x.bandwidth())
+
+        // width is determined by the duration of the fixation for that point in time
+        .attr("width", function(d) {
+            return d.DUR / 100;
+        })
 
         // how far do the bars have to reach
         // fixed height but needs to be adjusted for height of chart?
