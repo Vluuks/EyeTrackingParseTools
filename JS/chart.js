@@ -44,7 +44,7 @@ function makeChart() {
             return d.TS 
         })]);
             
-        // y axis ranging from first to max line number (might have to be reversed?)
+        // y axis ranging from first to max line number
         y.domain([d3.max(data, function (d) {
                     return Number(d.LN);
                 }), 0]);
@@ -73,13 +73,9 @@ function makeChart() {
         .text("Line");
 
         // divide height by amount of lines so bar height fits?
-        // console.log(data);
- 
         var barHeight = (+svg.attr("height") - (margin.top + margin.bottom)) / d3.max(data, function (d) {
             return Number(d.LN);
         });
-
-        // console.log(barHeight);
 
         g.selectAll(".bar")
         .data(data)
@@ -99,8 +95,7 @@ function makeChart() {
             return d.DUR / 100;
         })
 
-        // how far do the bars have to reach
-        // fixed height but needs to be adjusted for height of chart?
+        // adjusted for chart height divided by line n umbers
         .attr("height", barHeight)
     });
 
