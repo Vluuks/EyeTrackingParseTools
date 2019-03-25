@@ -3,7 +3,6 @@ window.onload = function() {
     makeChart();
 }
 
-
 function makeChart() {
 
     // find svg
@@ -98,6 +97,4 @@ function makeChart() {
         // adjusted for chart height divided by line n umbers
         .attr("height", barHeight)
     });
-
-
 }
