@@ -51,7 +51,7 @@ function makeChart() {
 
         g.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + (height + 20) + ")")
         .call(d3.axisBottom(x2).ticks(20));
 
         // rotate x axis text
