@@ -62,7 +62,11 @@ function makeChart() {
         .style("text-anchor", "start");
 
         g.append("g")
-        .call(d3.axisLeft(y))
+        .call(d3.axisLeft(y).ticks(d3.max(data, function (d) {
+            return Number(d.LineNumber);
+        })))
+
+        // text on y axis elements
         .append("text")
         .attr("fill", "#000")
         .attr("transform", "rotate(-90)")
