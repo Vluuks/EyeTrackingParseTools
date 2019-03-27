@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class Student {
+    
     private String name;
     private ArrayList<String> courses;
     private int credits;
@@ -31,7 +32,7 @@ public class Student {
         ArrayList<String> currentCourses = new ArrayList<String>(Arrays.asList("Information Visualization", "Service Oriented Design"));
         Student s1 = new Student("Sepp Tanson", currentCourses, 300);
 
-        if(s1.isEligibleForDiploma()) {
+        if (s1.isEligibleForDiploma()) {
             System.out.println("This student can graduate!");
         }
         else {
