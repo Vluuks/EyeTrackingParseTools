@@ -73,7 +73,7 @@ def parse_file_pandas():
     df.rename(name_map, axis='columns', inplace=True)
     
     # add col for later
-    df['linenumber'] = 0
+    df['LineNumber'] = 0
 
     # why is the input the ones you want to KEEP???
     # df2 = pd.melt(df, id_vars=columns_to_not_melt, var_name="linenumber", value_vars=columns_to_melt)

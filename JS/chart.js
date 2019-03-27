@@ -34,18 +34,18 @@ function makeChart() {
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
 
-    d3.csv("testbar.csv").then(function (data) {
+    d3.csv("secondattempt.csv").then(function (data) {
         x.domain(data.map(function (d) {
-                return d.TS;
+                return d.RecordingTimestamp;
             }));
 
         x2.domain([0, d3.max(data, function(d) { 
-            return d.TS 
+            return d.RecordingTimestamp 
         })]);
             
         // y axis ranging from first to max line number
         y.domain([d3.max(data, function (d) {
-                    return Number(d.LN);
+                    return Number(d.LineNumber);
                 }), 0]);
 
         g.append("g")
@@ -73,7 +73,7 @@ function makeChart() {
 
         // divide height by amount of lines so bar height fits?
         var barHeight = (+svg.attr("height") - (margin.top + margin.bottom)) / d3.max(data, function (d) {
-            return Number(d.LN);
+            return Number(d.LineNumber);
         });
 
         g.selectAll(".bar")
@@ -81,20 +81,27 @@ function makeChart() {
         .enter().append("rect")
         .attr("class", "bar")
         .attr("x", function (d) {
-            return x(d.TS);
+            return x(d.RecordingTimestamp);
         })
 
         // correct for height of bars when positioning since we reversed the order of the y axis
         .attr("y", function (d) {
-            return y(Number(d.LN)) - barHeight;
+            return y(Number(d.LineNumber)) - barHeight;
         })
 
         // width is determined by the duration of the fixation for that point in time
         .attr("width", function(d) {
-            return d.DUR / 100;
+            return d.GazeEventDuration / 200;
         })
 
         // adjusted for chart height divided by line n umbers
         .attr("height", barHeight)
+
+        // don't show unclassified lines (but investigate why they occur)
+        .style("opacity", function(d) {
+            if(d.LineNumber == 0){
+                return 0;
+            }
+        })
     });
 }
