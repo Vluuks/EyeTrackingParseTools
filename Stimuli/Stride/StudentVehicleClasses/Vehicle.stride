@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class name="Vehicle" enable="true" strideversion="1">
+    <javadoc xml:space="preserve">Write a description of class Vehicle here.</javadoc>
+    <imports>
+        <import target="java.util.*" enable="true"/>
+        <import target="greenfoot.*" enable="true"/>
+    </imports>
+    <implements/>
+    <fields>
+        <variable access="protected" type="String" type-java="String" name="producer" enable="true"/>
+        <variable access="protected" type="String" type-java="String" name="type" enable="true"/>
+        <variable access="protected" type="int" type-java="int" name="topSpeed" enable="true"/>
+        <variable access="protected" type="int" type-java="int" name="currentSpeed" enable="true"/>
+    </fields>
+    <constructors>
+        <constructor access="public" enable="true">
+            <javadoc xml:space="preserve"/>
+            <params>
+                <param type="String" type-java="String" name="producer"/>
+                <param type="String" type-java="String" name="type"/>
+                <param type="int" type-java="int" name="topSpeed"/>
+            </params>
+            <throws/>
+            <body>
+                <assign dest="this.producer" dest-java="this.producer" src="producer" src-java="producer" enable="true"/>
+                <assign dest="this.type" dest-java="this.type" src="type" src-java="type" enable="true"/>
+                <assign dest="this.topSpeed" dest-java="this.topSpeed" src="topSpeed" src-java="topSpeed" enable="true"/>
+                <assign dest="this.currentSpeed" dest-java="this.currentSpeed" src="0" src-java="0" enable="true"/>
+            </body>
+        </constructor>
+    </constructors>
+    <methods>
+        <method access="public" type="int" type-java="int" name="accelerate" enable="true">
+            <javadoc xml:space="preserve"/>
+            <params>
+                <param type="int" type-java="int" name="kmH"/>
+            </params>
+            <throws/>
+            <body>
+                <if condition="this.currentSpeed+kmH&gt;this.topSpeed" condition-java="this.currentSpeed + kmH &gt; this.topSpeed" enable="true">
+                    <ifStatements>
+                        <assign dest="this.currentSpeed" dest-java="this.currentSpeed" src="this.topSpeed" src-java="this.topSpeed" enable="true"/>
+                    </ifStatements>
+                    <else>
+                        <assign dest="this.currentSpeed" dest-java="this.currentSpeed" src="this.currentSpeed+kmH" src-java="this.currentSpeed + kmH" enable="true"/>
+                    </else>
+                </if>
+                <return value="this.currentSpeed" value-java="this.currentSpeed" enable="true"/>
+            </body>
+        </method>
+        <method access="public" static="true" type="void" type-java="void" name="main" enable="true">
+            <javadoc xml:space="preserve"/>
+            <params>
+                <param type="String[]" type-java="String[]" name="args"/>
+            </params>
+            <throws/>
+            <body>
+                <variable type="Vehicle" type-java="Vehicle" name="v" value="new Vehicle(&quot;Volvo&quot;,&quot;C30&quot;,230)" value-java=" new Vehicle(&quot;Volvo&quot;, &quot;C30&quot;, 230)" enable="true"/>
+                <call expression="System.out.println(v.accelerate(50))" expression-java="System.out.println(v.accelerate(50))" enable="true"/>
+            </body>
+        </method>
+    </methods>
+</class>

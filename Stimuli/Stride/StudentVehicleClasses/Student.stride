@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class name="Student" enable="true" strideversion="1">
+    <javadoc xml:space="preserve">Write a description of class Student here.</javadoc>
+    <imports>
+        <import target="java.util.*" enable="true"/>
+        <import target="greenfoot.*" enable="true"/>
+    </imports>
+    <implements/>
+    <fields>
+        <variable access="private" type="String" type-java="String" name="name" enable="true"/>
+        <variable access="private" type="ArrayList&lt;String&gt;" type-java="ArrayList&lt;String&gt;" name="courses" enable="true"/>
+        <variable access="private" type="int" type-java="int" name="credits" enable="true"/>
+    </fields>
+    <constructors>
+        <constructor access="public" enable="true">
+            <javadoc xml:space="preserve"/>
+            <params>
+                <param type="String" type-java="String" name="name"/>
+                <param type="ArrayList&lt;String&gt;" type-java="ArrayList&lt;String&gt;" name="courses"/>
+                <param type="int" type-java="int" name="credits"/>
+            </params>
+            <throws/>
+            <body>
+                <assign dest="this.name" dest-java="this.name" src="name" src-java="name" enable="true"/>
+                <assign dest="this.courses" dest-java="this.courses" src="courses" src-java="courses" enable="true"/>
+                <assign dest="this.credits" dest-java="this.credits" src="credits" src-java="credits" enable="true"/>
+            </body>
+        </constructor>
+    </constructors>
+    <methods>
+        <method access="public" type="boolean" type-java="boolean" name="isEligibleForDiploma" enable="true">
+            <javadoc xml:space="preserve"/>
+            <params/>
+            <throws/>
+            <body>
+                <return value="credits&gt;240" value-java="credits &gt; 240" enable="true"/>
+            </body>
+        </method>
+        <method access="public" type="String" type-java="String" name="listCourses" enable="true">
+            <javadoc xml:space="preserve"/>
+            <params/>
+            <throws/>
+            <body>
+                <variable type="String" type-java="String" name="courseString" value="&quot;&quot;" value-java="&quot;&quot;" enable="true"/>
+                <variable type="int" type-java="int" name="i" value="0" value-java="0" enable="true"/>
+                <while condition="i&lt;this.courses.size()" condition-java="i &lt; this.courses.size()" enable="true">
+                    <assign dest="courseString" dest-java="courseString" src="courseString+courses.get(i)+&quot; &quot;" src-java="courseString + courses.get(i) + &quot; &quot;" enable="true"/>
+                    <assign dest="i" dest-java="i" src="i+1" src-java="i + 1" enable="true"/>
+                </while>
+                <return value="courseString" value-java="courseString" enable="true"/>
+            </body>
+        </method>
+        <method access="public" static="true" type="void" type-java="void" name="main" enable="true">
+            <javadoc xml:space="preserve"/>
+            <params>
+                <param type="String[]" type-java="String[]" name="args"/>
+            </params>
+            <throws/>
+            <body>
+                <variable type="ArrayList&lt;String&gt;" type-java="ArrayList&lt;String&gt;" name="currentCourses" value="new ArrayList&lt;String&gt;(Arrays.asList(&quot;Information Visualization&quot;,&quot;Service Oriented Design&quot;))" value-java=" new ArrayList &lt; String &gt; (Arrays.asList(&quot;Information Visualization&quot;, &quot;Service Oriented Design&quot;))" enable="true"/>
+                <variable type="Student" type-java="Student" name="s1" value="new Student(&quot;Sepp Tanson&quot;,currentCourses,300)" value-java=" new Student(&quot;Sepp Tanson&quot;, currentCourses, 300)" enable="true"/>
+                <if condition="s1.isEligibleForDiploma()" condition-java="s1.isEligibleForDiploma()" enable="true">
+                    <ifStatements>
+                        <call expression="System.out.println(&quot;This student can graduate!&quot;)" expression-java="System.out.println(&quot;This student can graduate!&quot;)" enable="true"/>
+                    </ifStatements>
+                    <else>
+                        <call expression="System.out.println(&quot;Still need points. Current courses: &quot;+s1.listCourses())" expression-java="System.out.println(&quot;Still need points. Current courses: &quot; + s1.listCourses())" enable="true"/>
+                    </else>
+                </if>
+            </body>
+        </method>
+    </methods>
+</class>

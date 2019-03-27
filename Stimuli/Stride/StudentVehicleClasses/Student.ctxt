@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Student
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Student\ here.\r\n
+comment1.params=name\ courses\ credits
+comment1.target=Student(java.lang.String,\ java.util.ArrayList,\ int)
+comment1.text=\r\n\ \r\n
+comment2.params=
+comment2.target=boolean\ isEligibleForDiploma()
+comment2.text=\r\n\ \r\n
+comment3.params=
+comment3.target=java.lang.String\ listCourses()
+comment3.text=\r\n\ \r\n
+comment4.params=args
+comment4.target=void\ main(java.lang.String[])
+comment4.text=\r\n\ \r\n
+numComments=5
