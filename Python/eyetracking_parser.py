@@ -46,21 +46,51 @@ def parse_file_pandas():
     # grab file from csv
     df = pd.read_csv('test_cleaned_linenumbers.csv')
     # print(df)
-    
 
-    # rename columns to more sensible names
+    # rename columns to more sensible names because i was lazy with tobii
+    # assumes format "AOI[Rectangle 14]Hit"
+    name_map = {}
+    columns_to_melt = []
+    columns_to_not_melt = []
+
     for column in df:
-        if "Rectangle" in df[column]:
-            print(df[column])
+
+        # what a terrible way to do this
+        if "AOI[Rectangle" in column:
+            print(column)
+
+            # rename to numbers, minus 13 because the first rect is called "AOI[Rectangle 14]Hit"
+            new_column_name = ( int(column[-6:-4]) - 13)
+
+            # add to map and list
+            name_map[column] = new_column_name
+            columns_to_melt.append(new_column_name)
+
+        else:
+            columns_to_not_melt.append(column)
+
+    # actual renaming
 
 
-# USE EVAL?
-    # df.rename({'$a':'a', '$b':'b', '$c':'c', '$d':'d', '$e':'e'}, axis='columns')
+    print(name_map)
 
-    # keep list of said names for the next call of melt
+    df.rename(name_map, axis='columns', inplace=True)
+    print(df[-5:])
+
+    df.to_csv('firstattempt.csv')
 
     # merge line number columns into one
-    # df.melt(id_vars=['country','year','perc'])
+    # i understand nothing about this
+
+    # why is the input the ones you want to KEEP???
+    print(columns_to_melt)
+    df.melt(id_vars=columns_to_not_melt)
+    # print(df)
+
+
+    # write back to csv
+    df.to_csv('secondattempt.csv')
+    print(df[-5:])
 
     
 # main
