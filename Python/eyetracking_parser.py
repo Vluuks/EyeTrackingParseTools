@@ -70,23 +70,28 @@ def parse_file_pandas():
             columns_to_not_melt.append(column)
 
     # actual renaming
-
-
-    print(name_map)
-
     df.rename(name_map, axis='columns', inplace=True)
-    print(df[-5:])
-
-    df.to_csv('firstattempt.csv')
-
-    # merge line number columns into one
-    # i understand nothing about this
+    
+    # add col for later
+    df['linenumber'] = 0
 
     # why is the input the ones you want to KEEP???
-    print(columns_to_melt)
-    df.melt(id_vars=columns_to_not_melt)
-    # print(df)
+    # df2 = pd.melt(df, id_vars=columns_to_not_melt, var_name="linenumber", value_vars=columns_to_melt)
 
+    # i cant for the life of me figure out how to do this in one go so fuck it
+    df_subset = df[columns_to_melt]
+    
+    # for all line number columns
+    for column in df_subset:
+        
+        i = 0
+        # inside that column
+        for entry in df_subset[column]:
+            # if it says one there, say line number in original df
+            if int(entry) == 1:
+                df['linenumber'][i] = int(column)
+
+            i += 1
 
     # write back to csv
     df.to_csv('secondattempt.csv')
