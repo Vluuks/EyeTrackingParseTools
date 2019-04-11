@@ -1,0 +1,11 @@
+
+
+
+In the next phase of this study, you will be presented with a piece of source code. 
+
+Please read the source code carefully.  
+After reading, you will be asked to describe the code's purpose.
+When done reading the source code, you can use any key on the keyboard to continue. 
+
+
+If you are ready to start and everything is clear, please press any key to continue.

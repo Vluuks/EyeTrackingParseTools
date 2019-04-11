@@ -1,0 +1,7 @@
+
+
+
+You have now seen the first piece of source code.
+Please take your time to write down the source code's purpose.
+
+When ready, press any key to continue to the next piece of source code. 

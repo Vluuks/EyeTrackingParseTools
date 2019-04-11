@@ -1,0 +1,19 @@
+Thank you for participating! Please read the following text. 
+
+This study is about source code reading. It consists of two reading phases and two description phases:
+
+1. source code
+2. time to describe code's purpose
+3. source code
+4. time to describe code's purpose
+
+
+In the next phase of this study, you will be presented with the first piece of source code. 
+Please read the source code carefully in order to understand what it does. 
+After reading, you will be asked to describe the code's purpose.
+
+When done reading the source code, you can use any key on the keyboard to continue. 
+You can then write your interpretation of the code's purpose down on the form that was handed to you. 
+
+
+If everything is clear and you are ready to start, please press the space bar to continue.
