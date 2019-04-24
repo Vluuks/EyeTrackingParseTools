@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 import numpy as np
+import math
 
 def clean():
     df = pd.read_csv('RegularHL-StrideHL-SV.tsv', sep="\t")
@@ -56,9 +57,13 @@ def write_back_to_csv(df, file_name):
 
 def parse_lines():
 
-    df = pd.read_csv("R-S-SV1_studentClass.png.csv")
-    df["CorrectedRecordingTimestamp"] = df["RecordingTimestamp"] - df["RecordingTimestamp"][0]
+    # grab the right file and stimulus
+    df = pd.read_csv("R-S-SV2_studentClass.png.csv")
+    name = "R-S-SV2_studentClass_PARSED"
     stimulus = "studentClass.png"
+
+    df["CorrectedRecordingTimestamp"] = df["RecordingTimestamp"] - df["RecordingTimestamp"][0]
+    
 
     # make sure that for each image we know which AOI we need to map it to 
     stim_line_map = { 
@@ -123,7 +128,11 @@ def parse_lines():
         for entry in df_subset[column]:
 
             # if it says one there, say line number in original df
-            if int(entry) == 1:
+            # drop rows with NaN
+            if math.isnan(entry):
+                df.drop(df.index[i])
+
+            elif int(entry) == 1:
                 # print(i)
                 # continue
 
@@ -131,17 +140,19 @@ def parse_lines():
                 df['LineNumber'][i] = int(column)
                 # df.ix[i, 'LineNumber'] = int(column)
                 # print("replace")
-            
+
+            # update the row count
             i += 1
 
     # print(df.LineNumber)
     # reinit timestamp
     
 
-    df.to_csv("grrrrrrr6" + ".csv")
+    df.to_csv(name + ".csv")
 
    
 clean()
+# parse_lines()
 
 
 
