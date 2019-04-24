@@ -4,7 +4,7 @@ import numpy as np
 
 def clean():
     df = pd.read_csv('RegularHL-StrideHL-SV.tsv', sep="\t")
-    print(df)
+    # print(df)
 
 
     # remove all columns that we do not need
@@ -21,8 +21,8 @@ def clean():
 
     # done
     write_back_to_csv(df, "some_attempt")
-
     partition(df)
+
 
 def partition(df):
 
@@ -45,15 +45,102 @@ def partition(df):
                 # if said image was present in this dataset, make file for it
                 if len(subsubset) != 0: 
                     write_back_to_csv(subsubset, name + "_" + stimulus)
+                    
+
 
 
 def write_back_to_csv(df, file_name):
     df.to_csv(file_name + ".csv")
+    parse_lines()
 
 
+def parse_lines():
+
+    df = pd.read_csv("R-S-SV1_studentClass.png.csv")
+    df["CorrectedRecordingTimestamp"] = df["RecordingTimestamp"] - df["RecordingTimestamp"][0]
+    stimulus = "studentClass.png"
+
+    # make sure that for each image we know which AOI we need to map it to 
+    stim_line_map = { 
+                        "instructionimage1.png" : "BOEIT NIET",
+                        "vehicleClassStrideJava.png" : "VehSJ", 
+                        "studentClassStrideJava.png" : "StuSJ",
+                        "vehicleClass.png" : "Veh",
+                        "studentClass.png" : "Stu"
+                    }
+
+    # select all columns that start with the right clause
+    name_map = {}
+    name_list = []
+
+    index = 1
+    for column in df.columns:
+
+        # print(column)
+        # print(stim_line_map[stimulus])
+
+        # if its an image that makes sense, find columns that are belonging to the AOIS of t his image
+        if (stim_line_map[stimulus] + "-Rectangle") in column:
+
+            # print(stimulus)
+            # print(stim_line_map[stimulus])
+            # print("Column: " + column)
+            # print("Wordt index: " + str(index))
+
+            name_map[column] = str(index)
+            name_list.append(str(index))
+            index += 1
+
+    # print("NAME MAP AND LIST ----------------------------------")
+    # print(name_map)
+    # print(name_list)
+
+    # bulk renaming
+    df.rename(name_map, axis='columns', inplace=True)
+    # print("RENAMNING COLUMNS ----------------------------------")
+    # print(df.columns)
+    
+    # add col for later
+    df['LineNumber'] = 0
+    # print("ADDING 1 COLUMN ----------------------------------")
+    # print(df.columns)
+
+    df_subset = df[name_list]
+    # print("LINE NUMBER COLUMNS ----------------------------------")
+    # print(df_subset)
 
 
+    # print("ZEROES ----------------------------------")
+    # print(df['LineNumber'])
 
+    # for all line number columns
+    for column in df_subset:
+        # print("THIS IS A COLUMN:" + column)
+        
+        i = 0
+        # inside that column
+        # print(len(df_subset[column]))
+        for entry in df_subset[column]:
+
+            # if it says one there, say line number in original df
+            if int(entry) == 1:
+                # print(i)
+                # continue
+
+                # df.loc[df["LineNumber"]][i] = int(column)
+                df['LineNumber'][i] = int(column)
+                # df.ix[i, 'LineNumber'] = int(column)
+                # print("replace")
+            
+            i += 1
+
+    # print(df.LineNumber)
+    # reinit timestamp
+    
+
+    df.to_csv("grrrrrrr6" + ".csv")
+
+   
 clean()
 
 

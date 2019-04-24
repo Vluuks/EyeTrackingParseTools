@@ -34,14 +34,17 @@ function makeChart() {
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
 
-    d3.csv("secondattempt.csv").then(function (data) {
-        x.domain(data.map(function (d) {
-                return d.RecordingTimestamp;
-            }));
+        d3.csv("grrrrrrr6.csv").then(function (data) {
+        // x.domain(data.map(function (d) {
+        //         return d.CorrectedRecordingTimestamp;
+        //     }));
 
-        x2.domain([0, d3.max(data, function(d) { 
-            return d.RecordingTimestamp 
-        })]);
+        // console.log(x.domain)
+        maxRec = d3.max(data, function(d) { 
+            return +d.CorrectedRecordingTimestamp; 
+        });
+
+        x2.domain([0, maxRec]);
             
         // y axis ranging from first to max line number
         y.domain([d3.max(data, function (d) {
@@ -85,7 +88,8 @@ function makeChart() {
         .enter().append("rect")
         .attr("class", "bar")
         .attr("x", function (d) {
-            return x(d.RecordingTimestamp);
+            console.log(d.CorrectedRecordingTimestamp)
+            return x2(d.CorrectedRecordingTimestamp);
         })
 
         // correct for height of bars when positioning since we reversed the order of the y axis
@@ -95,7 +99,7 @@ function makeChart() {
 
         // width is determined by the duration of the fixation for that point in time
         .attr("width", function(d) {
-            return d.GazeEventDuration / 200;
+            return d.GazeEventDuration / (maxRec / 100);
         })
 
         // adjusted for chart height divided by line n umbers
