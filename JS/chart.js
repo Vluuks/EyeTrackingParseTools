@@ -34,7 +34,7 @@ function makeChart() {
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
 
-        d3.csv("Data/R-S-SV1_vehicleClassStrideJava_PARSED.csv").then(function (data) {
+        d3.csv("Data/R-S-VS2_studentClassStrideJava_PARSED.csv").then(function (data) {
         // x.domain(data.map(function (d) {
         //         return d.CorrectedRecordingTimestamp;
         //     }));
