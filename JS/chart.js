@@ -1,4 +1,4 @@
-codeLines = {
+var codeLines = {
     vehicleRegular : [
                         "public class Vehicle {", 
                         " ", 
@@ -28,7 +28,8 @@ codeLines = {
                         "Vehicle v = new Vehicle(\"Volvo\", \"C30\", 230);", 
                         "System.out.println(v.accelerate(50));",
                         "}",
-                        "}"
+                        "}",
+                        " "
                     ],
     studentRegular : [ 
                         "public class Student {", 
@@ -78,15 +79,54 @@ codeLines = {
 
 }
 
+// Student first, then Vehicle, matches dropdown
+var files = [
+                    [
+                        "AAAA_R-S-SV1_studentClass_PARSED.csv",
+                        "AAAA_R-S-SV2_studentClass_PARSED.csv",
+                        "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv",
+                        "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv"
+                    ],
+                    [
+                        "AAAA_R-S-VS1_vehicleClass_PARSED.csv",
+                        "AAAA_R-S-VS2_vehicleClass_PARSED.csv",
+                        "AAAA_R-S-SV1_vehicleClassStrideJava_PARSED.csv",
+                        "AAAA_R-S-SV2_vehicleClassStrideJava_PARSED.csv"
+                    ]
+    ]
 
-window.onload = function() {
-    makeChart();
+var fileToLine = {
+
+        "AAAA_R-S-SV1_studentClass_PARSED.csv" : "studentRegular",
+        "AAAA_R-S-SV2_studentClass_PARSED.csv" : "studentRegular",
+        "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv" : "studentStride",
+        "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv" : "studentStride",
+        "AAAA_R-S-VS1_vehicleClass_PARSED.csv" : "vehicleRegular",
+        "AAAA_R-S-VS2_vehicleClass_PARSED.csv" : "vehicleRegular",
+        "AAAA_R-S-SV1_vehicleClassStrideJava_PARSED.csv" : "vehicleStride",
+        "AAAA_R-S-SV2_vehicleClassStrideJava_PARSED.csv"  : "vehicleStride"
 }
 
-function makeChart() {
+window.onload = function() {
+    // standard call with student
+    changeFile(0);
+}
+
+function changeFile(s) {
+    console.log(s);
+
+    var chosenFileName = files[s][0];
+    makeChart(chosenFileName);
+}
+
+function makeChart(fileName) {
 
     // find svg
     var svg = d3.select("svg");
+
+    // clean
+    svg.selectAll("*").remove();
+
 
     // set margins of elements
     var margin = {
@@ -115,7 +155,7 @@ function makeChart() {
         .rangeRound([height, 0]);
 
         // grab CSV
-        d3.csv("Data/AAAA_R-S-SV2_studentClass_PARSED.csv").then(function (data) {
+        d3.csv("Data/" + fileName).then(function (data) {
 
         // get maximum of timestamp
         maxRec = d3.max(data, function(d) { 
@@ -147,7 +187,15 @@ function makeChart() {
         .call(d3.axisLeft(y).ticks(d3.max(data, function (d) {
             return Number(d.LineNumber);
         })).tickFormat(function(d){
-            return codeLines.studentRegular[d] + " " + d;
+
+            console.log(fileName);
+            console.log(fileToLine[fileName]);
+            console.log(codeLines[fileToLine[fileName]]);
+            console.log(codeLines[fileToLine[fileName]].length);
+            console.log(d);
+
+            return (codeLines[fileToLine[fileName]][d].length >= 25 ? codeLines[fileToLine[fileName]][d].substr(0, 25) + "..." : codeLines[fileToLine[fileName]][d])    
+             + " " + (d + 1);
          }))
         
         // y axis label
@@ -198,6 +246,9 @@ function makeChart() {
         .style("opacity", function(d) {
             if(d.LineNumber == 0){
                 return 0;
+            }
+            else {
+                return .50;
             }
         })
     });
