@@ -178,7 +178,7 @@ var fileToLine = {
 
 window.onload = function() {
     // standard call with student
-    changeFile(1);
+    changeFile(0);
 }
 
 function changeFile(s) {
