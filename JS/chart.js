@@ -187,6 +187,7 @@ function changeFile(s) {
     
     // clear previous graphs
     d3.select("#svgdiv").selectAll(".datasvg").remove();
+    d3.select("#svgdiv").selectAll(".graphtitle").remove();
 
     files[s].forEach(function(e) {
         console.log(e);
@@ -196,16 +197,17 @@ function changeFile(s) {
 
 function makeChart(fileName) {
 
+    
+
+    // title?
+    d3.select("#svgdiv").append("h1").html(fileName).attr("class", "graphtitle");
+
     // find svg
     var svg = d3.select("#svgdiv").append("svg");
 
-    // clean
-    svg.selectAll("*").remove();
-    
     svg.attr("width", 1200)
         .attr("height", 700)
         .attr("class", "datasvg")
-
 
     // set margins of elements
     var margin = {
