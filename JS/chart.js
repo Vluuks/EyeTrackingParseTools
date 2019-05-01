@@ -72,8 +72,156 @@ var codeLines = {
                         "}", 
                         "}"
                     ],
-    studentStride : [],
-    vehicleStride: []
+    studentStride : [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",  
+                    ],
+    vehicleStride: [
+                        
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                    ]
     
 
 
@@ -84,7 +232,7 @@ var files = [
                     [
                         "AAAA_R-S-SV1_studentClass_PARSED.csv",
                         "AAAA_R-S-SV2_studentClass_PARSED.csv",
-                        "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv",
+                        "AAAA_R-S-VS1_studentClassStrideJava_PARSED.csv",
                         "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv"
                     ],
                     [
@@ -93,13 +241,14 @@ var files = [
                         "AAAA_R-S-SV1_vehicleClassStrideJava_PARSED.csv",
                         "AAAA_R-S-SV2_vehicleClassStrideJava_PARSED.csv"
                     ]
-    ]
+    ];
 
+// maps the filename to the right index of lines dict
 var fileToLine = {
 
         "AAAA_R-S-SV1_studentClass_PARSED.csv" : "studentRegular",
         "AAAA_R-S-SV2_studentClass_PARSED.csv" : "studentRegular",
-        "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv" : "studentStride",
+        "AAAA_R-S-VS1_studentClassStrideJava_PARSED.csv" : "studentStride",
         "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv" : "studentStride",
         "AAAA_R-S-VS1_vehicleClass_PARSED.csv" : "vehicleRegular",
         "AAAA_R-S-VS2_vehicleClass_PARSED.csv" : "vehicleRegular",
@@ -109,23 +258,34 @@ var fileToLine = {
 
 window.onload = function() {
     // standard call with student
-    changeFile(0);
+    changeFile(1);
 }
 
 function changeFile(s) {
-    console.log(s);
 
     var chosenFileName = files[s][0];
-    makeChart(chosenFileName);
+    
+    // clear previous graphs
+    d3.select("#svgdiv").selectAll(".datasvg").remove();
+
+    files[s].forEach(function(e) {
+        console.log(e);
+        makeChart(e);
+    })
 }
 
 function makeChart(fileName) {
 
     // find svg
-    var svg = d3.select("svg");
+    var svg = d3.select("#svgdiv").append("svg");
+    // console.log(d3.select("#svgdiv"));
 
     // clean
     svg.selectAll("*").remove();
+    
+    svg.attr("width", 1500)
+        .attr("height", 700)
+        .attr("class", "datasvg")
 
 
     // set margins of elements
@@ -188,11 +348,13 @@ function makeChart(fileName) {
             return Number(d.LineNumber);
         })).tickFormat(function(d){
 
-            console.log(fileName);
-            console.log(fileToLine[fileName]);
-            console.log(codeLines[fileToLine[fileName]]);
-            console.log(codeLines[fileToLine[fileName]].length);
-            console.log(d);
+            if(d == 1) {
+                console.log("------------------------")
+                console.log(d);
+                console.log(fileName);
+                console.log(codeLines[fileToLine[fileName]][d])
+                console.log(codeLines[fileToLine[fileName]][d].length)
+            }
 
             return (codeLines[fileToLine[fileName]][d].length >= 25 ? codeLines[fileToLine[fileName]][d].substr(0, 25) + "..." : codeLines[fileToLine[fileName]][d])    
              + " " + (d + 1);
