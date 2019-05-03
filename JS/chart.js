@@ -153,13 +153,17 @@ var files = [
                         "AAAA_R-S-SV1_studentClass_PARSED.csv",
                         "AAAA_R-S-SV2_studentClass_PARSED.csv",
                         "AAAA_R-S-VS1_studentClassStrideJava_PARSED.csv",
-                        "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv"
+                        "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv",
+                        "AAAA_N-S-SV1_studentClass-noSH_PARSED.csv",
+                        "AAAA_N-S-VS1_studentClassStrideJava_PARSED.csv"
                     ],
                     [
                         "AAAA_R-S-VS1_vehicleClass_PARSED.csv",
                         "AAAA_R-S-VS2_vehicleClass_PARSED.csv",
                         "AAAA_R-S-SV1_vehicleClassStrideJava_PARSED.csv",
-                        "AAAA_R-S-SV2_vehicleClassStrideJava_PARSED.csv"
+                        "AAAA_R-S-SV2_vehicleClassStrideJava_PARSED.csv",
+                        "AAAA_N-S-VS1_vehicleClass-noSH_PARSED.csv",
+                        "AAAA_N-S-SV1_vehicleClassStrideJava_PARSED.csv"
                     ]
     ];
 
@@ -173,7 +177,12 @@ var fileToLine = {
         "AAAA_R-S-VS1_vehicleClass_PARSED.csv" : "vehicleRegular",
         "AAAA_R-S-VS2_vehicleClass_PARSED.csv" : "vehicleRegular",
         "AAAA_R-S-SV1_vehicleClassStrideJava_PARSED.csv" : "vehicleStride",
-        "AAAA_R-S-SV2_vehicleClassStrideJava_PARSED.csv"  : "vehicleStride"
+        "AAAA_R-S-SV2_vehicleClassStrideJava_PARSED.csv"  : "vehicleStride",
+        "AAAA_N-S-SV1_studentClass-noSH_PARSED.csv" : "studentRegular",
+        "AAAA_N-S-VS1_studentClassStrideJava_PARSED.csv" : "studentStride",
+        "AAAA_N-S-VS1_vehicleClass-noSH_PARSED.csv" : "vehicleRegular",
+        "AAAA_N-S-SV1_vehicleClassStrideJava_PARSED.csv" : "vehicleStride"
+
 }
 
 window.onload = function() {
