@@ -91,7 +91,6 @@ var codeLines = {
                         "courseString =  courseString + courses.get(i) + \" \";",
                         "i = i + 1;",
                         "return courseString;",
-                        "",
                         "public static void main(String[] args) {",
                         "ArrayList<String> currentCourses = new ArrayList<String>(Arrays.asList(\"Information Visualization\", \"Service Oriented Design\"));",
                         "Student s1 = new Student(\"Sepp Tanson\", currentCourses, 300);",
