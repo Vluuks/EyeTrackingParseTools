@@ -30,7 +30,7 @@ var codeLines = {
                         "System.out.println(v.accelerate(50));",
                         "}",
                         "}",
-                        " "
+                        " ",
                     ],
     studentRegular : [ 
                         "public class Student {", 
@@ -71,7 +71,8 @@ var codeLines = {
                         "System.out.println(\"Still need points. Current courses: \" + s1.listCourses());", 
                         "}", 
                         "}", 
-                        "}"
+                        "}",
+                        ""
                     ],
     studentStride : [
                         "class Student",
@@ -136,9 +137,6 @@ var codeLines = {
                         "}",
                         "",
                         "",
-                        "",
-                        "",
-                        "",
                         ""
                     ]
     
@@ -151,18 +149,24 @@ var files = [
                     [
                         "AAAA_R-S-SV1_studentClass_PARSED.csv",
                         "AAAA_R-S-SV2_studentClass_PARSED.csv",
+
                         "AAAA_R-S-VS1_studentClassStrideJava_PARSED.csv",
                         "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv",
+
                         "AAAA_N-S-SV1_studentClass-noSH_PARSED.csv",
                         "AAAA_N-S-SV2_studentClass-noSH_PARSED.csv",
+
                         "AAAA_N-S-VS1_studentClassStrideJava_PARSED.csv"
                     ],
                     [
                         "AAAA_R-S-VS1_vehicleClass_PARSED.csv",
                         "AAAA_R-S-VS2_vehicleClass_PARSED.csv",
+
                         "AAAA_R-S-SV1_vehicleClassStrideJava_PARSED.csv",
                         "AAAA_R-S-SV2_vehicleClassStrideJava_PARSED.csv",
+
                         "AAAA_N-S-VS1_vehicleClass-noSH_PARSED.csv",
+
                         "AAAA_N-S-SV1_vehicleClassStrideJava_PARSED.csv",
                         "AAAA_N-S-SV2_vehicleClassStrideJava_PARSED.csv"
                     ]
@@ -201,7 +205,7 @@ function changeFile(s) {
     d3.select("#svgdiv").selectAll(".graphtitle").remove();
 
     files[s].forEach(function(e) {
-        console.log(e);
+        // console.log(e);
         makeChart(e);
     })
 }
@@ -280,13 +284,13 @@ function makeChart(fileName) {
             return Number(d.LineNumber);
         })).tickFormat(function(d){
 
-            if(d == 1) {
-                console.log("------------------------")
-                console.log(d);
-                console.log(fileName);
-                console.log(codeLines[fileToLine[fileName]][d])
-                console.log(codeLines[fileToLine[fileName]][d].length)
-            }
+            // if(fileName == "AAAA_N-S-SV2_studentClass-noSH_PARSED.csv") {
+            //     console.log("------------------------")
+            //     console.log(d);
+            //     console.log(fileName);
+            //     console.log(codeLines[fileToLine[fileName]][d])
+            //     console.log(codeLines[fileToLine[fileName]][d].length)
+            // }
 
             return (codeLines[fileToLine[fileName]][d].length >= 25 ? codeLines[fileToLine[fileName]][d].substr(0, 25) + "..." : codeLines[fileToLine[fileName]][d])    
              + " " + (d + 1);
