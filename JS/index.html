@@ -11,15 +11,23 @@
 
 <h2 id="title">Eye tracking charts</h1>    
 <div class="selecteroni">
-    <select name="File" id ="file" onfocus="this.selectedIndex = -1;" onchange="changeFile(this.selectedIndex);">
-        <option value="student">Student.java</option>
-        <option value="vehicle">Vehicle.java</option>
+    <select name="Data" id ="data">
+        <option value="student">Student.java (All)</option>
+        <option value="vehicle">Vehicle.java (All)</option>
+        <option value="regular">Regular highlighting</option>
+        <option value="none">No highlighting</option>
+        <option value="block">Block highlighting</option>
     </select> 
 
-    <select id = "mode">
-        <option value="student">Separate</option>
-        <option value="vehicle">Condensed</option>
+    <select name="Treshold" id="treshold">
+        <option value="0">0</option>
+        <option value="100">100</option>
+        <option value="150">150</option>
+        <option value="200">200</option>
+        <option value="250">250</option>
     </select> 
+
+    <button name="confirm" onclick="clickHandler()">Go!</button>
 </div>    
 <div id="svgdiv">
     <!-- <svg id="svg" width="1500" height="800"></svg> -->

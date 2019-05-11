@@ -145,7 +145,8 @@ var codeLines = {
 }
 
 // Student first, then Vehicle, matches dropdown
-var files = [
+var files = { 
+                "student" :
                     [
                         "AAAA_R-S-SV1_studentClass_PARSED.csv",
                         "AAAA_R-S-SV2_studentClass_PARSED.csv",
@@ -158,6 +159,8 @@ var files = [
 
                         "AAAA_N-S-VS1_studentClassStrideJava_PARSED.csv"
                     ],
+
+                "vehicle" :
                     [
                         "AAAA_R-S-VS1_vehicleClass_PARSED.csv",
                         "AAAA_R-S-VS2_vehicleClass_PARSED.csv",
@@ -169,8 +172,36 @@ var files = [
 
                         "AAAA_N-S-SV1_vehicleClassStrideJava_PARSED.csv",
                         "AAAA_N-S-SV2_vehicleClassStrideJava_PARSED.csv"
+                    ],
+
+                "regular" :
+                    [
+                        "AAAA_R-S-SV1_studentClass_PARSED.csv",
+                        "AAAA_R-S-SV2_studentClass_PARSED.csv",
+                        "AAAA_R-S-VS1_vehicleClass_PARSED.csv",
+                        "AAAA_R-S-VS2_vehicleClass_PARSED.csv"
+                    ],
+
+                "none" : 
+                    [
+                        "AAAA_N-S-SV1_studentClass-noSH_PARSED.csv",
+                        "AAAA_N-S-SV2_studentClass-noSH_PARSED.csv",
+                        "AAAA_N-S-VS1_vehicleClass-noSH_PARSED.csv"
+
+                    ],
+
+                "block" :
+                    [
+                        "AAAA_R-S-VS1_studentClassStrideJava_PARSED.csv",
+                        "AAAA_R-S-VS2_studentClassStrideJava_PARSED.csv",
+                        "AAAA_N-S-VS1_studentClassStrideJava_PARSED.csv",
+                        "AAAA_R-S-SV1_vehicleClassStrideJava_PARSED.csv",
+                        "AAAA_R-S-SV2_vehicleClassStrideJava_PARSED.csv",
+                        "AAAA_N-S-SV1_vehicleClassStrideJava_PARSED.csv",
+                        "AAAA_N-S-SV2_vehicleClassStrideJava_PARSED.csv"    
                     ]
-    ];
+                };
+
 
 // maps the filename to the right index of lines dict
 var fileToLine = {
@@ -193,26 +224,36 @@ var fileToLine = {
 
 window.onload = function() {
     // standard call with student
-    changeFile(0);
+    // changeFile(0);
 }
 
-function changeFile(s) {
+function clickHandler() {
 
-    var chosenFileName = files[s][0];
+    // get the selected things from the dropdown
+    console.log("hmmm");
+
+    console.log(d3.select("#treshold"));
+
+    var treshold = document.getElementById("treshold").value;
+    var dataName = document.getElementById("data").value;
+
+    console.log(treshold + "_" + dataName);
+
+    changeFile(dataName, treshold);
+}
+
+function changeFile(dataSubset, treshold) {
     
     // clear previous graphs
     d3.select("#svgdiv").selectAll(".datasvg").remove();
     d3.select("#svgdiv").selectAll(".graphtitle").remove();
 
-    files[s].forEach(function(e) {
-        // console.log(e);
-        makeChart(e);
+    files[dataSubset].forEach(function(file) {
+        makeChart(file, treshold);
     })
 }
 
-function makeChart(fileName) {
-
-    
+function makeChart(fileName, treshold) {
 
     // title?
     d3.select("#svgdiv").append("h1").html(fileName).attr("class", "graphtitle");
@@ -330,7 +371,6 @@ function makeChart(fileName) {
         // correct for height of bars when positioning since we reversed the order of the y axis
         .attr("y", function (d) {
             return y(Number(d.LineNumber)) - (barHeight * 1.5);
-            // return y(Number(d.LineNumber)) - ;
         })
 
         // width is determined by the duration of the fixation for that point in time
@@ -348,7 +388,14 @@ function makeChart(fileName) {
                 return 0;
             }
             else {
-                return .50;
+                // console.log(treshold);
+                // console.log(typeof(treshold));
+                if(d.GazeEventDuration >= +treshold) {
+                    return .60;
+                }
+                else{
+                    return 0;
+                }
             }
         })
     });
