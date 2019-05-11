@@ -291,8 +291,26 @@ function makeChart(fileName, treshold) {
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
 
-        // grab CSV
-        d3.csv("Data/" + fileName).then(function (data) {
+    // Create Tooltips
+    var tip = d3.tip().attr('class', 'd3-tip').direction('e').offset([0,5])
+    .html(function(d) {
+        var content = "<span style='margin-left: 2.5px;'><b>" + d.GazeEventDuration + "ms" + "</b></span><br>";
+        content += "<span style='margin-left: 2.5px;'><b>" + codeLines[fileToLine[fileName]][d.LineNumber-1] + "</b></span><br>"
+        return content;
+    });
+    svg.call(tip);
+
+    // grab CSV
+    d3.csv("Data/" + fileName).then(function (data) {
+
+        var color = d3.scaleLinear()
+        // .domain(d3.range[0, d3.max(data, function (d) {
+        //     return Number(d.GazeEventDuration);
+        // })])
+        .domain([0, d3.max(data, function (d) {
+                return Number(d.GazeEventDuration);
+            })])
+        .range(["#c0cadb", "#275fba"]);
 
         // get maximum of timestamp
         maxRec = d3.max(data, function(d) { 
@@ -304,6 +322,12 @@ function makeChart(fileName, treshold) {
         y.domain([d3.max(data, function (d) {
                     return Number(d.LineNumber);
                 }), 0]);
+
+        var width = d3.scaleLinear()
+        .range([0, maxRec])
+        .domain([66, d3.max(data, function(d){
+            return Number(d.GazeEventDuration);
+        })]);
 
         // make x axis
         g.append("g")
@@ -334,8 +358,8 @@ function makeChart(fileName, treshold) {
             // }
 
             return (codeLines[fileToLine[fileName]][d].length >= 25 ? codeLines[fileToLine[fileName]][d].substr(0, 25) + "..." : codeLines[fileToLine[fileName]][d])    
-             + " " + (d + 1);
-         }))
+            + " " + (d + 1);
+        }))
         
         // y axis label
         .append("text")
@@ -352,7 +376,6 @@ function makeChart(fileName, treshold) {
         .attr("y", 6)
         .attr("dy", "0.71em")
         .attr("text-anchor", "end")
-        .text("safkafksahsfkah")
 
         // divide height by amount of lines so bar height fits?
         var barHeight = (+svg.attr("height") - (margin.top + margin.bottom)) / d3.max(data, function (d) {
@@ -375,28 +398,37 @@ function makeChart(fileName, treshold) {
 
         // width is determined by the duration of the fixation for that point in time
         .attr("width", function(d) {
-            return d.GazeEventDuration / (maxRec / 100);
+            console.log(x2(d.GazeEventDuration));
+            return x2(d.GazeEventDuration);
+            return d.GazeEventDuration / (maxRec/100);
         })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
+
 
         // adjusted for chart height divided by line n umbers
         .attr("height", barHeight)
-        .style("fill", "#264270")
+        // .style("fill", "#264270")
+        .attr("fill", function(d) { 
+            return color(d.GazeEventDuration); 
+        })
 
         // don't show unclassified lines (but investigate why they occur)
         .style("opacity", function(d) {
             if(d.LineNumber == 0){
                 return 0;
             }
+
+            // check treshold
             else {
-                // console.log(treshold);
-                // console.log(typeof(treshold));
                 if(d.GazeEventDuration >= +treshold) {
-                    return .60;
+                    return .80;
                 }
                 else{
                     return 0;
                 }
             }
         })
+    // end of data scope
     });
 }
