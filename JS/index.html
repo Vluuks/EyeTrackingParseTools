@@ -12,7 +12,10 @@
 
 <h2 id="title">Eye tracking charts</h1>    
 <div class="selecteroni">
-    <select name="Data" id ="data">
+
+<label for="data">Data:</label>
+
+    <select text="Data" name="Data" id ="data">
         <option value="student">Student.java (All)</option>
         <option value="vehicle">Vehicle.java (All)</option>
         <option value="regular">Regular highlighting</option>
@@ -20,13 +23,22 @@
         <option value="block">Block highlighting</option>
     </select> 
 
-    <select name="Treshold" id="treshold">
+    <label for="treshold">Treshold:</label>
+
+    <select text="Treshold" name="Treshold" id="treshold">
         <option value="0">0</option>
         <option value="100">100</option>
         <option value="150">150</option>
         <option value="200">200</option>
         <option value="250">250</option>
     </select> 
+
+    <label for="blocks">Blocks:</label>
+
+    <select text="Blocks" name="Blocks" id="blocks">
+        <option value="0">Don't show blocks</option>
+        <option value="0">Show blocks</option>
+    </select>
 
     <button name="confirm" onclick="clickHandler()">Go!</button>
 </div>    

@@ -294,8 +294,10 @@ function makeChart(fileName, treshold) {
     // Create Tooltips
     var tip = d3.tip().attr('class', 'd3-tip').direction('e').offset([0,5])
     .html(function(d) {
-        var content = "<span style='margin-left: 2.5px;'><b>" + d.GazeEventDuration + "ms" + "</b></span><br>";
-        content += "<span style='margin-left: 2.5px;'><b>" + codeLines[fileToLine[fileName]][d.LineNumber-1] + "</b></span><br>"
+        var content = "<span style='margin-left: 2.5px;'><b> Time:</b> " + d.CorrectedRecordingTimestamp + "ms" + " (" + d.CorrectedRecordingTimestamp / 1000 + "s)" + "</span><br>";
+        content += "<span style='margin-left: 2.5px;'><b> Duration:</b> " + d.GazeEventDuration + "ms" + "</span><br>";
+        content += "<span style='margin-left: 2.5px;'><b> Line:</b> " + d.LineNumber  + "</span><br>"
+        content += "<span style='margin-left: 2.5px;'>" + codeLines[fileToLine[fileName]][d.LineNumber-1] + "</span>"
         return content;
     });
     svg.call(tip);
