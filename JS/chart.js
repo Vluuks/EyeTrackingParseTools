@@ -236,35 +236,55 @@ function clickHandler() {
 
     var treshold = document.getElementById("treshold").value;
     var dataName = document.getElementById("data").value;
+    var blocks = document.getElementById("blocks").value;
+
+    console.log(blocks);
 
     console.log(treshold + "_" + dataName);
 
-    changeFile(dataName, treshold);
+    changeFile(dataName, treshold, Number(blocks));
 }
 
-function changeFile(dataSubset, treshold) {
+function changeFile(dataSubset, treshold, blocks) {
     
-    // clear previous graphs
+    // clear previous graphs and images
     d3.select("#svgdiv").selectAll(".datasvg").remove();
     d3.select("#svgdiv").selectAll(".graphtitle").remove();
+    d3.select("#svgdiv").selectAll(".overlay").remove();
 
     files[dataSubset].forEach(function(file) {
-        makeChart(file, treshold);
+        makeChart(file, treshold, blocks);
     })
 }
 
-function makeChart(fileName, treshold) {
+function makeChart(fileName, treshold, blocks) {
 
     // title?
     d3.select("#svgdiv").append("h1").html(fileName).attr("class", "graphtitle");
 
+    var subdiv = d3.select("#svgdiv").append("div")
+        .attr("id", "div"+fileName)
+        .attr("class", "svgclass");
+
     // find svg
-    var svg = d3.select("#svgdiv").append("svg");
+    var svg = subdiv.append("svg");
 
     svg.attr("width", 1200)
         .attr("height", 700)
         .attr("class", "datasvg")
+        .attr("id", fileName);
 
+
+    // append block if needed 
+    if(blocks == 1) {
+        subdiv
+            .append("img")
+            .attr("width", 1200)
+            .attr("height", 700)
+            .attr("class", "overlay")
+            .attr("src", "testoverlaysvg.png")
+    }
+    
     // set margins of elements
     var margin = {
         top: 40,
@@ -350,15 +370,6 @@ function makeChart(fileName, treshold) {
         .call(d3.axisLeft(y).ticks(d3.max(data, function (d) {
             return Number(d.LineNumber);
         })).tickFormat(function(d){
-
-            // if(fileName == "AAAA_N-S-SV2_studentClass-noSH_PARSED.csv") {
-            //     console.log("------------------------")
-            //     console.log(d);
-            //     console.log(fileName);
-            //     console.log(codeLines[fileToLine[fileName]][d])
-            //     console.log(codeLines[fileToLine[fileName]][d].length)
-            // }
-
             return (codeLines[fileToLine[fileName]][d].length >= 25 ? codeLines[fileToLine[fileName]][d].substr(0, 25) + "..." : codeLines[fileToLine[fileName]][d])    
             + " " + (d + 1);
         }))
@@ -400,9 +411,7 @@ function makeChart(fileName, treshold) {
 
         // width is determined by the duration of the fixation for that point in time
         .attr("width", function(d) {
-            console.log(x2(d.GazeEventDuration));
             return x2(d.GazeEventDuration);
-            return d.GazeEventDuration / (maxRec/100);
         })
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
