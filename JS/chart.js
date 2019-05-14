@@ -223,10 +223,10 @@ var fileToLine = {
 }
 
 var blockLines = {
-    "studentRegular" : [5, 11, 15, 19, 26],
-    "studentStride" : [4.5, 8.5, 10.5, 17.5],
-    "vehicleRegular" : [7, 14, 24],
-    "vehicleStride" : [7, 14, 26]
+    "studentRegular" : [4, 10, 14, 18, 25],
+    "studentStride" : [3.5, 7.5, 9.5, 16.5],
+    "vehicleRegular" : [6, 13, 23],
+    "vehicleStride" : [6, 13, 25]
 }
 
 
