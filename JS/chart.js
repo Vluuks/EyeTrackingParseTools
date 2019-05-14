@@ -222,6 +222,14 @@ var fileToLine = {
         "AAAA_N-S-SV2_studentClass-noSH_PARSED.csv" : "studentRegular"
 }
 
+var blockLines = {
+    "studentRegular" : [5, 11, 15, 19, 26],
+    "studentStride" : [4.5, 8.5, 10.5, 17.5],
+    "vehicleRegular" : [7, 14, 24],
+    "vehicleStride" : [7, 14, 26]
+}
+
+
 window.onload = function() {
     // standard call with student
     // changeFile(0);
@@ -345,7 +353,7 @@ function makeChart(fileName, treshold, blocks) {
                     return Number(d.LineNumber);
                 }), 0]);
 
-        var width = d3.scaleLinear()
+        var widthBar = d3.scaleLinear()
         .range([0, maxRec])
         .domain([66, d3.max(data, function(d){
             return Number(d.GazeEventDuration);
@@ -394,6 +402,17 @@ function makeChart(fileName, treshold, blocks) {
         var barHeight = (+svg.attr("height") - (margin.top + margin.bottom)) / d3.max(data, function (d) {
             return Number(d.LineNumber);
         });
+
+        // add lines for blocks
+        g.selectAll(".blockline")
+        .data(blockLines[fileToLine[fileName]])
+        .enter().append("rect")
+        .attr("class", "blockline")
+        .attr("x", 0)
+        .attr("y", function(d){ return y(d)})
+        .attr("width", width)
+        .attr("height", 1)
+        .attr("fill", "#d3d3d3");
 
         g.selectAll(".bar")
         .data(data)
