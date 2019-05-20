@@ -238,17 +238,9 @@ window.onload = function() {
 function clickHandler() {
 
     // get the selected things from the dropdown
-    console.log("hmmm");
-
-    console.log(d3.select("#treshold"));
-
     var treshold = document.getElementById("treshold").value;
     var dataName = document.getElementById("data").value;
     var blocks = document.getElementById("blocks").value;
-
-    console.log(blocks);
-
-    console.log(treshold + "_" + dataName);
 
     changeFile(dataName, treshold, Number(blocks));
 }
@@ -290,7 +282,7 @@ function makeChart(fileName, treshold, blocks) {
             .attr("width", 1200)
             .attr("height", 700)
             .attr("class", "overlay")
-            .attr("src", "testoverlaysvg.png")
+            .attr("src", fileName + ".png")
     }
     
     // set margins of elements
@@ -412,7 +404,7 @@ function makeChart(fileName, treshold, blocks) {
         .attr("y", function(d){ return y(d)})
         .attr("width", width)
         .attr("height", 1)
-        .attr("fill", "#d3d3d3");
+        .attr("fill", "#4c4c4c");
 
         g.selectAll(".bar")
         .data(data)
@@ -424,8 +416,9 @@ function makeChart(fileName, treshold, blocks) {
         })
 
         // correct for height of bars when positioning since we reversed the order of the y axis
+        // perform additional correction where necessary
         .attr("y", function (d) {
-            return y(Number(d.LineNumber)) - (barHeight * 1.5);
+            return y(Number(d.LineNumber) + 1) - (barHeight * 1.5);
         })
 
         // width is determined by the duration of the fixation for that point in time
