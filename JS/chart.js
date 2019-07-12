@@ -334,9 +334,6 @@ function makeChart(fileName, treshold, blocks) {
     d3.csv("Data/" + fileName).then(function (data) {
 
         var color = d3.scaleLinear()
-        // .domain(d3.range[0, d3.max(data, function (d) {
-        //     return Number(d.GazeEventDuration);
-        // })])
         .domain([0, d3.max(data, function (d) {
                 return Number(d.GazeEventDuration);
             })])
@@ -405,23 +402,22 @@ function makeChart(fileName, treshold, blocks) {
 
         // add lines for blocks
         g.selectAll(".blockline")
-        .data(blockLines[fileToLine[fileName]])
-        .enter().append("rect")
-        .attr("class", "blockline")
-        .attr("x", 0)
-        .attr("y", function(d){ return y(d)})
-        .attr("width", width)
-        .attr("height", 1)
-        .attr("fill", "#d3d3d3");
+            .data(blockLines[fileToLine[fileName]])
+            .enter().append("rect")
+            .attr("class", "blockline")
+            .attr("x", 0)
+            .attr("y", function(d){ return y(d)})
+            .attr("width", width)
+            .attr("height", 1)
+            .attr("fill", "#d3d3d3");
 
         g.selectAll(".bar")
-        .data(data)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function (d) {
-            // console.log(d.CorrectedRecordingTimestamp)
-            return x2(d.CorrectedRecordingTimestamp);
-        })
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function (d) {
+                return x2(d.CorrectedRecordingTimestamp);
+            })
 
         // correct for height of bars when positioning since we reversed the order of the y axis
         .attr("y", function (d) {

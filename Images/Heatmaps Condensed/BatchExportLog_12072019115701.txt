@@ -1,0 +1,42 @@
+Batch export log for 12/07/2019 11:57:01
+10 combinations of media, participant group and segment group were skipped since they didn’t contain any data.
+Media: vehicleClass.png
+Participant group: All Participants
+Segment group: Full recordings
+
+Media: instructionImage2.png
+Participant group: All Participants
+Segment group: Full recordings
+
+Media: instructionImage3.png
+Participant group: All Participants
+Segment group: Full recordings
+
+Media: studentClassStride.png
+Participant group: All Participants
+Segment group: Full recordings
+
+Media: vehicleClass.png
+Participant group: All Participants
+Segment group: Full recordings
+
+Media: studentClassStrideJava.png
+Participant group: All Participants
+Segment group: Full recordings
+
+Media: vehicleClassStride.png
+Participant group: All Participants
+Segment group: Full recordings
+
+Media: studentClass.png
+Participant group: All Participants
+Segment group: Full recordings
+
+Media: vehicleClassStrideJava.png
+Participant group: All Participants
+Segment group: Full recordings
+
+Media: vehicleClassStride.png
+Participant group: All Participants
+Segment group: Full recordings
+
