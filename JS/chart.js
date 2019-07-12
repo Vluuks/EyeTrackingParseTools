@@ -238,17 +238,9 @@ window.onload = function() {
 function clickHandler() {
 
     // get the selected things from the dropdown
-    console.log("hmmm");
-
-    console.log(d3.select("#treshold"));
-
     var treshold = document.getElementById("treshold").value;
     var dataName = document.getElementById("data").value;
     var blocks = document.getElementById("blocks").value;
-
-    console.log(blocks);
-
-    console.log(treshold + "_" + dataName);
 
     changeFile(dataName, treshold, Number(blocks));
 }
@@ -290,7 +282,7 @@ function makeChart(fileName, treshold, blocks) {
             .attr("width", 1200)
             .attr("height", 700)
             .attr("class", "overlay")
-            .attr("src", "testoverlaysvg.png")
+            .attr("src", fileName + ".png")
     }
     
     // set margins of elements
@@ -334,6 +326,9 @@ function makeChart(fileName, treshold, blocks) {
     d3.csv("Data/" + fileName).then(function (data) {
 
         var color = d3.scaleLinear()
+        // .domain(d3.range[0, d3.max(data, function (d) {
+        //     return Number(d.GazeEventDuration);
+        // })])
         .domain([0, d3.max(data, function (d) {
                 return Number(d.GazeEventDuration);
             })])
@@ -402,26 +397,28 @@ function makeChart(fileName, treshold, blocks) {
 
         // add lines for blocks
         g.selectAll(".blockline")
-            .data(blockLines[fileToLine[fileName]])
-            .enter().append("rect")
-            .attr("class", "blockline")
-            .attr("x", 0)
-            .attr("y", function(d){ return y(d)})
-            .attr("width", width)
-            .attr("height", 1)
-            .attr("fill", "#d3d3d3");
+        .data(blockLines[fileToLine[fileName]])
+        .enter().append("rect")
+        .attr("class", "blockline")
+        .attr("x", 0)
+        .attr("y", function(d){ return y(d)})
+        .attr("width", width)
+        .attr("height", 1)
+        .attr("fill", "#4c4c4c");
 
         g.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function (d) {
-                return x2(d.CorrectedRecordingTimestamp);
-            })
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function (d) {
+            // console.log(d.CorrectedRecordingTimestamp)
+            return x2(d.CorrectedRecordingTimestamp);
+        })
 
         // correct for height of bars when positioning since we reversed the order of the y axis
+        // perform additional correction where necessary
         .attr("y", function (d) {
-            return y(Number(d.LineNumber)) - (barHeight * 1.5);
+            return y(Number(d.LineNumber) + 1) - (barHeight * 1.5);
         })
 
         // width is determined by the duration of the fixation for that point in time
